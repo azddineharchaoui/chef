@@ -4,10 +4,11 @@
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $name = trim($_POST['name']);
         $email = trim($_POST['email']);
+        $phone = trim($_POST['phone']);
         $password = password_hash(trim($_POST['password']), PASSWORD_BCRYPT);
     
-        $query = "INSERT INTO users (name, email, password, role_id, created_at) VALUES (?, ?, ?, 2, NOW())";
-        $stmt = secure_query($conn, $query, [$name, $email, $password], 'sss');
+        $query = "INSERT INTO users (name, email, password, phone, role_id, created_at) VALUES (?, ?, ?, ?, 2, NOW())";
+        $stmt = secure_query($conn, $query, [$name, $email, $password, $phone], 'ssss');
         
         if ($stmt->affected_rows === 1) {
             header("Location: login.php");
@@ -39,13 +40,20 @@
                         <?php endif; ?>
                         <form method="POST">
                             <div class="mb-3">
-                                <input type="text" name="name" placeholder="Name" required class="form-control">
+                                <label for="name">Name</label>
+                                <input type="text" name="name" id="name" placeholder="Name" required class="form-control">
                             </div>
                             <div class="mb-3">
-                                <input type="email" name="email" placeholder="Email" required class="form-control">
+                            <label for="email">Email</label>
+                                <input type="email" name="email" id="email" placeholder="Email" required class="form-control">
                             </div>
                             <div class="mb-3">
-                                <input type="password" name="password" placeholder="Password" required class="form-control">
+                            <label for="phone">Phone</label>
+                                <input type="text" name="phone" id="phone" placeholder="Phone" required class="form-control">
+                            </div>
+                            <div class="mb-3">
+                            <label for="password">Password</label>
+                                <input type="password" name="password" id="password" placeholder="Password" required class="form-control">
                             </div>
                             <button type="submit" class="btn btn-success w-100">Sign Up</button>
                         </form>

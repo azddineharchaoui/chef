@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($user['titre'] === 'admin') {
                 header("Location: dashboard.php");
             } else {
-                header("Location: menus.php");
+                header("Location: reservations.php");
             }
             exit;
         } else {

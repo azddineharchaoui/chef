@@ -1,3 +1,7 @@
+<?php 
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +38,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container position-relative d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+      <a href="index.php" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <img src="assets/img/logo.png" alt="">
         <h1 class="sitename">Yummy</h1>
@@ -47,17 +51,32 @@
           <li><a href="#about">About</a></li>
           <li><a href="#menu">Menu</a></li>
           <li><a href="#events">Events</a></li>
-          <li><a href="#chefs">Chefs</a></li>
           <li><a href="#gallery">Gallery</a></li>
           <li><a href="#contact">Contact</a></li>
-          <li><a href="#reserve">Reserve</a></li>
+          <li><a href="reservations.php">Reserve</a></li>
 
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-
+  <?php 
+    if(!isset($_SESSION['user_id'])){
+      ?>
       <a class="btn-getstarted" href="login.php">Login</a>
-
+      <a class="btn-getstarted" href="signup.php">Signup</a>
+    <?php }else { 
+        include ("db.php");
+        $sql = "SELECT name from users WHERE id_user = {$_SESSION['user_id']}";
+        $result = $conn->query($sql);
+        if($result->num_rows > 0){
+          $user = $result->fetch_assoc();
+        }
+      ?>
+          <div class="b-flex justify-content-end">
+          <span><?php if(isset($user)){echo $user['name'];}?></span>
+            <a class="btn-getstarted" href="logout.php">Logout</a>
+      </div>
+    <?php }
+    ?>
     </div>
   </header>
 
@@ -72,7 +91,7 @@
             <h1 data-aos="fade-up">Enjoy Your Healthy<br>Delicious Food</h1>
             <p data-aos="fade-up" data-aos-delay="100">I am a professional Chef with many years of experience in making delicious and tasty dishes.</p>
             <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-              <a href="#reserve" class="btn-get-started">reserve</a>
+              <a href="reservations.php" class="btn-get-started">reserve</a>
             </div>
           </div>
           <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
@@ -772,139 +791,9 @@ I’m committed to providing a warm, welcoming atmosphere where every guest feel
 
     </section><!-- /Events Section -->
 
-    <!-- Chefs Section -->
-    <section id="chefs" class="chefs section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>chefs</h2>
-        <p><span>Our</span> <span class="description-title">Proffesional Chefs<br></span></p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="assets/img/chefs/chefs-1.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Walter White</h4>
-                <span>Master Chef</span>
-                <p>Velit aut quia fugit et et. Dolorum ea voluptate vel tempore tenetur ipsa quae aut. Ipsum exercitationem iure minima enim corporis et voluptate.</p>
-              </div>
-            </div>
-          </div><!-- End Chef Team Member -->
-
-          <div class="col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="assets/img/chefs/chefs-2.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>Sarah Jhonson</h4>
-                <span>Patissier</span>
-                <p>Quo esse repellendus quia id. Est eum et accusantium pariatur fugit nihil minima suscipit corporis. Voluptate sed quas reiciendis animi neque sapiente.</p>
-              </div>
-            </div>
-          </div><!-- End Chef Team Member -->
-
-          <div class="col-lg-4 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="300">
-            <div class="team-member">
-              <div class="member-img">
-                <img src="assets/img/chefs/chefs-3.jpg" class="img-fluid" alt="">
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-              <div class="member-info">
-                <h4>William Anderson</h4>
-                <span>Cook</span>
-                <p>Vero omnis enim consequatur. Voluptas consectetur unde qui molestiae deserunt. Voluptates enim aut architecto porro aspernatur molestiae modi.</p>
-              </div>
-            </div>
-          </div><!-- End Chef Team Member -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Chefs Section -->
-
+   
     <!-- Book A Table Section -->
-    <section id="reserve" class="book-a-table section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Book A Table</h2>
-        <p><span>Book Your</span> <span class="description-title">Stay With Us<br></span></p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
-
-          <div class="col-lg-4 reservation-img" style="background-image: url(assets/img/reservation.jpg);"></div>
-
-          <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
-            <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form">
-              <div class="row gy-4">
-                <div class="col-lg-4 col-md-6">
-                  <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
-                </div>
-                <div class="col-lg-4 col-md-6">
-                  <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required="">
-                </div>
-                <div class="col-lg-4 col-md-6">
-                  <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone" required="">
-                </div>
-                <div class="col-lg-4 col-md-6">
-                  <input type="date" name="date" class="form-control" id="date" placeholder="Date" required="">
-                </div>
-                <div class="col-lg-4 col-md-6">
-                  <input type="time" class="form-control" name="time" id="time" placeholder="Time" required="">
-                </div>
-                <div class="col-lg-4 col-md-6">
-                  <input type="number" class="form-control" name="people" id="people" placeholder="# of people" required="">
-                </div>
-              </div>
-
-              <div class="form-group mt-3">
-                <textarea class="form-control" name="message" rows="5" placeholder="Message"></textarea>
-              </div>
-
-              <div class="text-center mt-3">
-                <div class="loading">Loading</div>
-                <div class="error-message"></div>
-                <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-                <button type="submit">Book a Table</button>
-              </div>
-            </form>
-          </div><!-- End Reservation Form -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Book A Table Section -->
-
+    
     <!-- Gallery Section -->
     <section id="gallery" class="gallery section light-background">
 
