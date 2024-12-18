@@ -24,22 +24,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-<section class="min-h-screen flex items-center justify-center bg-gradient-to-r from-green-400 to-teal-500">
-    <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <h1 class="text-2xl font-bold text-center mb-6">Sign Up</h1>
-        <?php if (isset($error)): ?>
-            <div class="text-red-500 text-sm mb-4"><?= $error; ?></div>
-        <?php endif; ?>
-        <form method="POST">
-            <input type="text" name="name" placeholder="Name" required class="w-full p-2 mb-4 border rounded">
-            <input type="email" name="email" placeholder="Email" required class="w-full p-2 mb-4 border rounded">
-            <input type="password" name="password" placeholder="Password" required class="w-full p-2 mb-4 border rounded">
-            <button class="w-full bg-green-600 text-white py-2 rounded">Sign Up</button>
-        </form>
-        <p class="text-center mt-4">Already have an account? <a href="login.php" class="text-green-500">Login</a></p>
+<body class="bg-light">
+<section class="d-flex align-items-center justify-content-center vh-100 bg-gradient">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-lg rounded">
+                    <div class="card-body p-4">
+                        <h1 class="text-center mb-4">Sign Up</h1>
+                        <?php if (isset($error)): ?>
+                            <div class="alert alert-danger"><?= $error; ?></div>
+                        <?php endif; ?>
+                        <form method="POST">
+                            <div class="mb-3">
+                                <input type="text" name="name" placeholder="Name" required class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" name="email" placeholder="Email" required class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <input type="password" name="password" placeholder="Password" required class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Sign Up</button>
+                        </form>
+                        <p class="text-center mt-3">Already have an account? 
+                            <a href="login.php" class="text-decoration-none text-success">Login</a>
+                        </p>
+                        <p class="text-center mt-3">Or return
+                            <a href="index.php" class="text-decoration-none text-success">Home</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 </body>

@@ -1,25 +1,28 @@
 <?php
 include 'db.php'; 
 session_start();
-if()
+
 
 $query = "SELECT id_menu, name, description FROM menus";
 $result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html class="no-js">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menus</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+
 </head>
 <body>
     <section class="min-h-screen bg-gray-50 py-8">
         <div class="container mx-auto">
             <h1 class="text-2xl font-bold text-center mb-6">Exclusive Menus</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"> -->
                 <?php while ($row = $result->fetch_assoc()): ?>
                 <div class="p-4 bg-white shadow rounded-lg">
                     <h3 class="text-lg font-bold"><?= htmlspecialchars($row['name']) ?></h3>
@@ -30,8 +33,6 @@ $result = $conn->query($query);
                     </form>
                 </div>
                 <?php endwhile; ?>
-            </div>
-        </div>
-    </section>
+                
 </body>
 </html>
