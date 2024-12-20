@@ -1,17 +1,23 @@
 <?php
+session_start();
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $menu_name = $_POST['menu_name'];
-    $menu_description = $_POST['menu_description'];
+    $menu_name = htmlentities($_POST['menu_name']);
+    $menu_description = htmlentities($_POST['menu_description']);
 
-    // Insertion du menu dans la base de données
     $stmt = $conn->prepare("INSERT INTO menus (name, description) VALUES (?, ?)");
     $stmt->bind_param('ss', $menu_name, $menu_description);
     if ($stmt->execute()) {
-        echo "Menu ajouté avec succès!";
+        $_SESSION['m_added'] = '
+<div id="autoCloseAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> The menu has been added successfully.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+';
+        header("Location: dashboard.php");
     } else {
-        echo "Erreur lors de l'ajout du menu.";
+        echo "Erreur while adding the menu.";
     }
 }
 ?>

@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = trim($_POST['password']);
 
     // Requête mise à jour avec une jointure pour récupérer le titre du rôle
-    $query = "SELECT u.id_user, u.password, r.titre 
+    $query = "SELECT u.id_user, u.password, r.id_role
               FROM users u
               INNER JOIN roles r ON u.role_id = r.id_role
               WHERE u.email = ?";
@@ -21,9 +21,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id_user'];
-            $_SESSION['role'] = $user['titre']; 
+            $_SESSION['role_id'] = $user['id_role']; 
 
-            if ($user['titre'] === 'admin') {
+            if ($user['id_role'] === 1) {
                 header("Location: dashboard.php");
             } else {
                 header("Location: reservations.php");
@@ -45,6 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .custom-btn {
+            background-color: #ce1212;
+            color: #fff;
+        }
+    </style>
 </head>
 <body class="bg-light d-flex align-items-center justify-content-center vh-100">
     <div class="card shadow p-4 rounded" style="width: 100%; max-width: 400px;">
@@ -60,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="password" class="form-label">Password:</label>
                 <input type="password" name="password" id="password" class="form-control" required>
             </div>
-            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <button type="submit" class="btn custom-btn w-100">Login</button>
         </form>
         <p class="text-center mt-3">You don'it have an account? 
                             <a href="signup.php" class="text-decoration-none text-success">Signup</a>

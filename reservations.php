@@ -33,7 +33,12 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-
+  <style>
+        .custom-btn {
+            background-color: #ce1212;
+            color: #fff;
+        }
+    </style>
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 </head>
@@ -53,6 +58,7 @@
                 <ul>
                     <li><a href="index.php">Home</a></li>
                     <li><a href="reservations.php">Reserve</a></li>
+                    <li><a href="manage_reservations.php">Manage reservations</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
@@ -75,8 +81,8 @@
 
     <!-- Main Content -->
     <main class="container my-5">
-        <h2 class="text-center mb-4">Reserve Your Menu</h2>
-        <form action="process_reservation.php" method="post" class="row g-3">
+    <h1 class="text-center">Manage Reservations</h1>
+    <form action="add_reservation.php" method="post" class="row g-3" id="form-reservation">
             <div class="col-md-6">
                 <label for="name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="name" name="name" value="<?= $user['name'];?>" required>
@@ -113,18 +119,112 @@
                 </select>
             </div>
             <div class="col-12">
-                <button type="submit" class="btn btn-primary w-100">Submit Reservation</button>
+                <button type="submit" class="btn custom-btn w-100">Reserve</button>
             </div>
         </form>
     </main>
 
     <!-- Footer -->
-    <footer class="text-center py-4">
-        <p>&copy; 2024 Yummy. All Rights Reserved.</p>
-    </footer>
+    
+  <footer id="footer" class="footer dark-background">
+
+<div class="container">
+  <div class="row gy-3">
+    <div class="col-lg-3 col-md-6 d-flex">
+      <i class="bi bi-geo-alt icon"></i>
+      <div class="address">
+        <h4>Address</h4>
+        <p>A108 Adam Street</p>
+        <p>New York, NY 535022</p>
+        <p></p>
+      </div>
+
+    </div>
+
+    <div class="col-lg-3 col-md-6 d-flex">
+      <i class="bi bi-telephone icon"></i>
+      <div>
+        <h4>Contact</h4>
+        <p>
+          <strong>Phone:</strong> <span>+1 5589 55488 55</span><br>
+          <strong>Email:</strong> <span>info@example.com</span><br>
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6 d-flex">
+      <i class="bi bi-clock icon"></i>
+      <div>
+        <h4>Opening Hours</h4>
+        <p>
+          <strong>Mon-Sat:</strong> <span>11AM - 23PM</span><br>
+          <strong>Sunday</strong>: <span>Closed</span>
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-6">
+      <h4>Follow Us</h4>
+      <div class="social-links d-flex">
+        <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
+        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container copyright text-center mt-4">
+  <p>© <span>Copyright</span> <strong class="px-1 sitename">Chef cuisinier</strong> <span>All Rights Reserved</span></p>
+  
+</div>
+
+</footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        const name = /^[a-zA-Z\s]+$/;
+        const phone = /^(?\d{3})?[\s-]?\d{3}[\s-]?\d{4}$/;
+        const email = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,4}$/;
+        // const password = /^(?=.[A-Za-z])(?=.\d)[A-Za-z\d]{8,}$/;
+        const date = /^\d{4}-\d{2}-\d{2}$/;
+        // const title = /^[A-Za-z0-9\s]+$/;
+    document.querySelector("#form-reservation").addEventListener("submit",(event)=>{
+        const formElements = event.target.elements;
+
+
+        let getDate = formElements['date'];
+        let getName = formElements['name'];
+        let getEmail = formElements['email'];
+        let getPhone = formElements['phone'];
+
+
+        getDate.style.border = "1px solid #d1d5db";
+        getName.style.border = "1px solid #d1d5db";
+        getEmail.style.border = "1px solid #d1d5db";
+        getPhone.style.border = "1px solid #d1d5db";
+
+        if(!date.test(getDate.value)){
+            event.preventDefault();
+            getDate.style.border = "2px solid red";
+        }else if(!email.test(getEmail)){
+            event.preventDefault();
+            getEmail.style.border = "2px solid red";
+        }else if(!name.test(getName.value)){
+            event.preventDefault();
+            getName.style.border = "2px solid red";
+        }else if(!phone.test(getPhone.value)){
+            event.preventDefault();
+            getPhone.style.border = "2px solid red";
+        }
+    }
+    )
+
+    </script>
 </body>
 
 </html>

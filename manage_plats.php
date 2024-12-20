@@ -2,20 +2,25 @@
 include 'db.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $menu_id = $_POST['menu_id'];
-    $name = $_POST['name'];
-    $ingredients = $_POST['ingredients'];
-    $image = $_FILES['image']['tmp_name'];
+    $nbr_plat = htmlentities($_POST['nbr_plat']);
+    $menu_id = htmlentities($_POST["menu_id_0"]);
 
-    $imageData = file_get_contents($image);
+    for($i = 0; $i < $nbr_plat; $i++) {
+        $name = $_POST["name_{$i}"];
+        $ingredients = $_POST["ingredients_{$i}"];
+        $image = $_FILES["image_{$i}"]["tmp_name"];
 
-    // Insertion du plat dans la base de données
-    $stmt = $conn->prepare("INSERT INTO plats (menu_id, name, ingredients, image) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param('isss', $menu_id, $name, $ingredients, $imageData);
-    if ($stmt->execute()) {
-        echo "Plat ajouté avec succès!";
-    } else {
-        echo "Erreur lors de l'ajout du plat.";
-    }
+        $imageData = file_get_contents($image);
+
+        $stmt = $conn->prepare("INSERT INTO plats (menu_id, name, ingredients, image) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param('isss', $menu_id, $name, $ingredients, $imageData);
+        if ($stmt->execute()) {
+            echo "Plat ajouté avec succès!";
+            header("Location: dashboard.php");
+        } else {
+            echo "Erreur lors de l'ajout du plat.";
+            header("Location: dashboard.php");
+        }
+}
 }
 ?>
